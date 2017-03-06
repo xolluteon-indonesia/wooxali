@@ -36,8 +36,17 @@ class AliClient
         $responce = curl_exec($ch);
         
         $content = json_decode($responce, false);
+        
+        if($content == null){
+            $errorMsg = 'return null';
+            $error = new \stdClass();
+            $error->status = 'ERROR';
+            $error->errorCode = 20020000;
+            $error->errorMsg = $errorMsg;
+            $content = $error;
+        }
 
-        if ($content->errorCode !== 20010000) {
+        if ( $content != null && $content->errorCode !== 20010000) {
             $errorMsg = $request->getError($content->errorCode);
             $error = new \stdClass();
             $error->status = 'ERROR';

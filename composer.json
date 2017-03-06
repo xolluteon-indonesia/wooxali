@@ -1,0 +1,18 @@
+{
+    "name": "xolluteon-indonesia/wooxali",
+    "description": "Library Aliexpress API for Laravel 5",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Xolluteon Indonesia",
+            "email": "xolluteon.id@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Xolluteon\\Wooxali\\": "/src"
+        }
+    }
+}

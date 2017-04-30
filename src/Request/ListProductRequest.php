@@ -113,6 +113,13 @@ class ListProductRequest extends Request
      * @var integer
      */
     private $endCreditScore;
+
+     /**
+     * The products contain good images & titles, great sales and postive feedback from buyers,
+     * for example,'true' or no this parameter.
+     * @var integer
+     */
+    private $highQualityItems;
     
     public function getFields()
     {
@@ -172,6 +179,11 @@ class ListProductRequest extends Request
     public function getSort()
     {
         return $this->sort;
+    }
+
+    public function getHighQualityItems()
+    {
+        return $this->highQualityItems = true;
     }
 
     public function getStartCreditScore()
@@ -324,7 +336,7 @@ class ListProductRequest extends Request
     {
         return 'totalResults,productId,productTitle,productUrl,imageUrl,'
         . 'originalPrice,salePrice,discount,evaluateScore,commission,'
-                . 'commissionRate,30daysCommission,volume,packageType,'
-                . 'lotNum,validTime';
+        . 'commissionRate,30daysCommission,volume,packageType,'
+		. 'lotNum,validTime';
     }
 }

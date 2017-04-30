@@ -33,12 +33,14 @@ class AliExpress
             $request->setKeywords($searchParam);
         }
 
-        $request->setSort('sellerRateDown');
-
         foreach ($params as $key => $val) {
             $set = 'set'.ucfirst($key);
             $request->$set($val);
         }
+
+        $request->setSort('sellerRateDown');
+        $request->getHighQualityItems();
+
         $client = new AliClient;
         $responce = $client->getData($request);
         

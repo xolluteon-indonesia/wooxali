@@ -65,22 +65,16 @@ class AliExpress
         $client = new AliClient;
         $responce = $client->getData($request);
 		//Fiqi Update response
-        if($responce && $responce->errorCode == 20010000){
+        if(isset($responce->result) && $responce->errorCode == 20010000){
+        	if ($fields == null || $fields == '') {
+        		$descURL = 'https://www.aliexpress.com/getDescModuleAjax.htm?productId=' . $productId;
+        		//fetch product description
+        		$longDescription = $client->getProductDesc($descURL);
 
-                $curl = curl_init();
-                // Set some options - we are passing in a useragent too here
-                curl_setopt_array($curl, array(
-                    CURLOPT_RETURNTRANSFER => 1,
-                    CURLOPT_URL => 'https://www.aliexpress.com/getDescModuleAjax.htm?productId='.$productId,
-                    // CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-                ));
-                // Send the request & save response to $resp
-                $resp = curl_exec($curl);
-                // Close request to clear up some resources
-                curl_close($curl);
-                $productDesc = str_replace("window.productDescription='", "", $resp);
-                $productDesc = substr($productDesc, 15, -6);
-                $responce->result->productDescription = $productDesc;
+        		//fetch product attributes.
+        		$productURL = $responce->result->productUrl;			
+        		$responce->result->longDescription = $longDescription;
+        	}
         }
         return $responce;
     }
@@ -119,4 +113,34 @@ class AliExpress
         $catList = config('wooxali.category');
         return $catList;
     }
+
+    private function aeShortDesc($properties, $colorAttr)
+    {
+        $return = '';
+        $return .= '<h3 style="width: 100%; position: relative; float: left;">Product Details</h3>';
+        $brand = isset($properties['Brand']) ? $properties['Brand'] : 'This Product Has No Brand';
+        if(is_array($colorAttr) && count($colorAttr) > 0){
+        	$stringColors = implode(' | ', $colorAttr);
+
+        	$color = $stringColors != '' ? $stringColors : 'This product does not have color attributes';
+        }else{
+        	$color = 'This product does not have color attributes';
+        }
+        
+        $return .= '<h4 style="width: 100%; position: relative; float: left;">Brand: '.ucfirst($brand).'</h4>';
+        $return .= '<h4 style="width: 100%; position: relative; float: left;">Color: '.ucfirst($color).'</h4>';
+        $return .= '<ul style="position: relative; width: 100%; float: left; list-style-position: inside; padding-left: 0;">';
+        if(is_array($properties) && count($properties) > 0){
+            foreach($properties as $key => $val){
+                $return .= '<li>'.$key.': '.$val.'</li>';
+            }
+        }else{
+            // what to do on this case? - Arung
+            $return .= '<li>This product does not have Product Details information</li>';
+        }
+        $return .= '</ul>';
+       
+        return $return;
+    }
+
 }

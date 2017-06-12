@@ -106,9 +106,9 @@ class ProductRequest extends Request
      */
     private function setDefaultFields()
     {
-        return 'productId,productTitle,productUrl,imageUrl,'
-        . 'originalPrice,salePrice,discount,evaluateScore,commission,'
-                . 'commissionRate,30daysCommission,volume,packageType,'
-                . 'lotNum,validTime,storeName,storeUrl';
+		return 'productId,productTitle,productUrl,imageUrl,'
+		. 'originalPrice,salePrice,discount,evaluateScore,commission,'
+		. 'commissionRate,30daysCommission,volume,packageType,'
+		. 'lotNum,validTime,storeName,storeUrl,allImageUrls';
     }
 }

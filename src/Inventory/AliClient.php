@@ -103,6 +103,9 @@ class AliClient
         );
         $return = preg_replace('/<a href=\"(.*?)\">(.*?)<\/a>/', "\\2", $return);
 
+        $return = str_replace("‘;", "", $return);
+        $return = str_replace("';", "", $return);
+
     	return $return;
     }
 

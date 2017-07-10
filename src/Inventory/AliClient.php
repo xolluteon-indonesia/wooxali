@@ -12,10 +12,12 @@ class AliClient
      */
     private $appKey;
     
-    public function __construct()
+    public function __construct($public, $secret)
     {
-        $this->appKey = config('wooxali.aliexpress_app_key');
-        $this->appSecret = config('wooxali.aliexpress_app_secret');
+    /*    $this->appKey = config('wooxali.aliexpress_app_key');
+        $this->appSecret = config('wooxali.aliexpress_app_secret');*/
+        $this->appKey = $public;
+        $this->appSecret = $secret;
     }
     
     /**

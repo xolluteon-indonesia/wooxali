@@ -8,10 +8,12 @@ use Xolluteon\Wooxali\Request\ProductRequest;
 use Xolluteon\Wooxali\Inventory\AliClient;
 
 class AliExpress
-{    
-    public function __construct()
-    {
+{   
 
+    public function __construct($public = null, $private = null)
+    {
+        $this->ali_public = $public;
+        $this->ali_private = $private;
     }
     
     /**
@@ -41,7 +43,7 @@ class AliExpress
         $request->setSort('sellerRateDown');
         $request->getHighQualityItems();
 
-        $client = new AliClient;
+        $client = new AliClient( $this->ali_public, $this->ali_private);
         $responce = $client->getData($request);
         
         
@@ -62,7 +64,7 @@ class AliExpress
         if ($fields !== null) {
             $request->setFields($fields);
         }
-        $client = new AliClient;
+        $client = new AliClient( $this->ali_public, $this->ali_private);
         $responce = $client->getData($request);
 		//Fiqi Update response
         if(isset($responce->result) && $responce->errorCode == 20010000){
@@ -98,7 +100,7 @@ class AliExpress
         if ($fields !== null) {
             $request->setFields($fields);
         }
-        $client = new AliClient;
+        $client = new AliClient( $this->ali_public, $this->ali_private);
         $responce = $client->getData($request);
         
         return $responce;

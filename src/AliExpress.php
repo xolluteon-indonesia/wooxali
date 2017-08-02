@@ -39,8 +39,11 @@ class AliExpress
             $set = 'set'.ucfirst($key);
             $request->$set($val);
         }
-
-        $request->setSort('sellerRateDown');
+        if( !isset($params['sort']) || empty($params['sort'])){
+            $request->setSort('sellerRateDown');
+        }else{
+            $request->setSort($params['sort']);
+        }
         $request->getHighQualityItems();
 
         $client = new AliClient( $this->ali_public, $this->ali_private);
